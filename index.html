@@ -3,85 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trip Master Pro | Fuel & Distance Tracker</title>
+    <title>Trip Master Pro</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3b82f6">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <button id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Dark Mode">🌙</button>
-            <h1 class="logo">Trip Master Pro</h1>
+            <button id="themeToggle" onclick="toggleTheme()">🌙</button>
+            <h1 class="logo">Trip Master</h1>
             <select id="currency" onchange="updateCurrency()">
                 <option value="$">USD ($)</option>
                 <option value="₹">INR (₹)</option>
                 <option value="€">EUR (€)</option>
-                <option value="£">GBP (£)</option>
             </select>
         </header>
 
         <section class="card">
-            <label for="carSearch">1. Vehicle Model</label>
+            <label>1. Vehicle Model</label>
             <div class="search-box">
-                <input type="text" id="carSearch" placeholder="e.g., Honda Civic">
+                <input type="text" id="carSearch" placeholder="e.g. Honda Civic">
                 <button onclick="fetchVehicleData()">Fetch</button>
             </div>
-            <p id="carInfo" class="info-text">Enter model to get estimated km/L.</p>
+            <p id="carInfo" class="info-text">Fetch mileage to begin.</p>
         </section>
 
         <section class="card map-card">
-            <label>2. Select Route (Tap 2 Points)</label>
             <div id="map"></div>
-            <p id="mapHint" class="info-text">Click Start and Destination on the map.</p>
+            <p id="mapHint" class="info-text">Tap 2 points to calculate distance.</p>
         </section>
 
         <section class="card">
             <div class="row">
                 <div class="input-wrap">
-                    <label for="distance">Distance (km)</label>
-                    <input type="number" id="distance" placeholder="0" step="0.1">
+                    <label>Distance (km)</label>
+                    <input type="number" id="distance" placeholder="0">
                 </div>
                 <div class="input-wrap">
-                    <label for="time">Time (hrs)</label>
-                    <input type="number" id="time" placeholder="1" step="0.1">
+                    <label>Time (hrs)</label>
+                    <input type="number" id="time" placeholder="1">
                 </div>
             </div>
-            
-            <label for="price">Fuel Price (per L)</label>
+            <label>Fuel Price /L</label>
             <div class="price-input">
                 <span id="currSymbol">$</span>
-                <input type="number" id="price" placeholder="0.00" step="0.01">
+                <input type="number" id="price" placeholder="0.00">
             </div>
-            
-            <button class="main-btn" onclick="calculateTrip()">Calculate Trip Stats</button>
+            <button class="main-btn" onclick="calculateTrip()">Calculate Trip</button>
         </section>
 
         <section id="results" class="results-box" style="display: none;">
             <div class="res-grid">
                 <div class="res-card">
-                    <span class="res-label">Fuel Needed</span>
-                    <span class="res-val"><span id="fuelNeeded">0</span> L</span>
+                    <span class="label">Fuel Needed</span>
+                    <span class="val"><span id="fuelNeeded">0</span> L</span>
                 </div>
                 <div class="res-card highlighted">
-                    <span class="res-label">Trip Cost</span>
-                    <span class="res-val"><span id="resSymbol">$</span><span id="costRes">0</span></span>
+                    <span class="label">Trip Cost</span>
+                    <span class="val"><span id="resSymbol">$</span><span id="costRes">0</span></span>
                 </div>
             </div>
-            
-            <div class="efficiency-section">
-                <div class="res-row">
-                    <span>Avg Speed: <strong id="speedRes">0</strong> km/h</span>
-                </div>
-                <div class="meter-container">
-                    <div id="meterBar" class="meter-fill"></div>
-                </div>
+            <div class="efficiency-zone">
+                <p>Speed: <strong id="speedRes">0</strong> km/h</p>
+                <div class="meter-bg"><div id="meterBar" class="meter-fill"></div></div>
                 <p id="efficiencyTip" class="info-text"></p>
             </div>
         </section>
 
         <section class="history-section">
             <div class="history-header">
-                <h3>Recent Trips</h3>
+                <h3>History</h3>
                 <button class="export-btn" onclick="exportToCSV()">Export CSV</button>
             </div>
             <div id="historyList"></div>
@@ -90,5 +83,10 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js');
+        }
+    </script>
 </body>
 </html>
