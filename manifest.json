@@ -1,0 +1,11 @@
+{
+  "short_name": "TripMaster",
+  "name": "Trip Master Pro",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#3b82f6",
+  "background_color": "#f8fafc",
+  "icons": [
+    { "src": "https://cdn-icons-png.flaticon.com/512/744/744465.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
